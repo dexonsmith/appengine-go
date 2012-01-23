@@ -384,7 +384,7 @@ var GetGoing = Class.create({
                             }                            
                             else
                             {
-                                self._succeed_create_game(response['your_cookie'], response['your_turn']);
+                                self._succeed_create_game(response['your_cookie'], response['your_turn'], response['opponent_cookie']);
                             }
                         }
                         else
@@ -402,10 +402,12 @@ var GetGoing = Class.create({
         }
     },
 
-    _succeed_create_game : function(your_cookie, your_turn)
+    _succeed_create_game : function(your_cookie, your_turn, opponent_cookie)
     {
         this._hide_twitter_password();
         $("play_link").href = "/play/" + your_cookie + "/";
+        $("opponent_link").href = "/play/" + opponent_cookie + "/";
+        $("opponent_link").removeClassName("disabled");
         
         if (your_turn)
         {

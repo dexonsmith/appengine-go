@@ -1230,10 +1230,10 @@ class CreateGameHandler(GoHandler):
             TwitterHelper.notify_opponent_new_game(your_name, opponent_name, opponent_twitter, opponent_cookie, your_turn)
             
         # Great; the game is created!
-        return (your_cookie, your_turn)
+        return (your_cookie, your_turn, opponent_cookie)
 
-    def success(self, your_cookie, your_turn):        
-        self.render_json({'success': True, 'need_your_twitter_password': False, 'your_cookie': your_cookie, 'your_turn': your_turn})
+    def success(self, your_cookie, your_turn, opponent_cookie):        
+        self.render_json({'success': True, 'need_your_twitter_password': False, 'your_cookie': your_cookie, 'your_turn': your_turn, 'opponent_cookie': opponent_cookie})
     
     def post(self, *args):
         try:
@@ -1329,8 +1329,8 @@ class CreateGameHandler(GoHandler):
             # success -- opponent is following @davepeckgo
             
         try:
-            your_cookie, your_turn = self.create_game(your_name, your_contact, your_contact_type, opponent_name, opponent_contact, opponent_contact_type, your_color, board_size_index, handicap_index, komi_index) 
-            self.success(your_cookie, your_turn)
+            your_cookie, your_turn, opponent_cookie = self.create_game(your_name, your_contact, your_contact_type, opponent_name, opponent_contact, opponent_contact_type, your_color, board_size_index, handicap_index, komi_index) 
+            self.success(your_cookie, your_turn, opponent_cookie)
         except:
             logging.error("An unexpected error occured in CreateGameHandler: %s" % ExceptionHelper.exception_string())
             self.fail("Sorry, an unexpected error occured. Please try again in a minute or two.")
